@@ -19,7 +19,7 @@ public class Client implements Serializable {
     private String surname;
 
     @Column(name = "EDAD")
-    private Long age;
+    private int age;
 
     @Column(name = "FECHA_NACIMIENTO")
     private Date birth;
@@ -27,7 +27,7 @@ public class Client implements Serializable {
     public Client() {
     }
 
-    public Client(Long age, Date birth, String name, String surname) {
+    public Client(int age, Date birth, String name, String surname) {
         this.age = age;
         this.birth = birth;
         this.name = name;
@@ -50,11 +50,11 @@ public class Client implements Serializable {
         this.surname = surname;
     }
 
-    public Long getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(Long age) {
+    public void setAge(int age) {
         this.age = age;
     }
 

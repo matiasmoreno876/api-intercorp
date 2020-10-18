@@ -1,22 +1,26 @@
 package com.intercorp.intercorp.controllers;
 
-import com.intercorp.intercorp.dtos.ClientDto;
+import com.intercorp.intercorp.dtos.NewClientRequets;
 import com.intercorp.intercorp.models.Client;
 import com.intercorp.intercorp.services.ClientService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.text.ParseException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
-@RequestMapping("/clients")
+@RequestMapping("/api/clients")
 public class ClientController {
 
     private ClientService clientService;
-
     private ModelMapper modelMapper;
 
     @Autowired
@@ -25,6 +29,12 @@ public class ClientController {
         this.modelMapper = modelMapper;
     }
 
+    @ApiOperation(value = "Obtiene todos los clientes",
+            response = Client.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success"),
+            @ApiResponse(code = 400, message = "Bad Request")
+    })
     @GetMapping
     public ResponseEntity<List<Client>> getAll() {
         List<Client> clients = this.clientService.getAll();
@@ -33,11 +43,29 @@ public class ClientController {
                 : ResponseEntity.noContent().build();
     }
 
-    @PostMapping(consumes = "application/json", produces = "application/json")
-    public ResponseEntity<?> createClient(@RequestBody ClientDto clientDto) {
+    @ApiOperation(value = "Obtiene las métricas de los clientes")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success"),
+            @ApiResponse(code = 400, message = "Bad Request")
+    })
+    @GetMapping("/kpi")
+    public ResponseEntity getKpiClients() {
+        try {
+            Map<String, Double> kpis = this.clientService.getKpis();
+            return (!kpis.isEmpty())
+                    ? ResponseEntity.ok().body(kpis)
+                    : ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.noContent().build();
+        }
+    }
+
+    @ApiOperation(value = "Crea un nuevo cliente en BD POSTGRESQL")
+    @PostMapping
+    public ResponseEntity<?> postCreateClient(@Valid @RequestBody NewClientRequets newClientRequets) {
 
         try {
-            Client client = clientService.save(convertToEntity(clientDto));
+            Client client = clientService.save(convertToEntity(newClientRequets));
             return (client != null)
                     ? ResponseEntity.created(null).body(client)
                     : ResponseEntity.noContent().build();
@@ -47,8 +75,8 @@ public class ClientController {
         }
     }
 
-    private Client convertToEntity(ClientDto clientDto) throws ParseException {
-        return modelMapper.map(clientDto, Client.class);
+    private Client convertToEntity(NewClientRequets newClientRequets) throws ParseException {
+        return modelMapper.map(newClientRequets, Client.class);
     }
 
 }

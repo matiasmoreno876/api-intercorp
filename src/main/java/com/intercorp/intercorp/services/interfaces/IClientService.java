@@ -2,7 +2,6 @@ package com.intercorp.intercorp.services.interfaces;
 
 import com.intercorp.intercorp.models.Client;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +11,6 @@ public interface IClientService {
 
     Client save(Client client);
 
-    Map<String, Long> getKpis();
+    Map<String, Double> getKpis();
 
 }

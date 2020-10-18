@@ -1,15 +1,19 @@
 package com.intercorp.intercorp.dtos;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-public class ClientDto {
-
+public class NewClientRequets {
+    @NotNull
+    @NotBlank
     private String name;
-
+    @NotNull
+    @NotBlank
     private String surname;
-
-    private Long age;
-
+    @NotNull
+    private int age;
+    @NotNull
     private Date birth;
 
     public String getName() {
@@ -28,11 +32,11 @@ public class ClientDto {
         this.surname = surname;
     }
 
-    public Long getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(Long age) {
+    public void setAge(int age) {
         this.age = age;
     }
 
