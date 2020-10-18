@@ -11,7 +11,7 @@
 	<groupId>com.intercorp</groupId>
 	<artifactId>intercorp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+<!--	<packaging>war</packaging>-->
 	<name>intercorp</name>
 	<description>Demo project for Spring Boot</description>
 
