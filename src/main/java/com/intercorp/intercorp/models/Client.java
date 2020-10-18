@@ -27,7 +27,7 @@ public class Client implements Serializable {
     public Client() {
     }
 
-    public Client(int age, Date birth, String name, String surname) {
+    public Client(String name, String surname, int age, Date birth) {
         this.age = age;
         this.birth = birth;
         this.name = name;

@@ -1,6 +1,7 @@
 package com.intercorp.intercorp.services;
 
 import com.intercorp.intercorp.dao.ClientDao;
+import com.intercorp.intercorp.dao.interfaces.IClientDao;
 import com.intercorp.intercorp.models.Client;
 import com.intercorp.intercorp.services.interfaces.IClientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 @Service
 public class ClientService implements IClientService {
 
-    private ClientDao clientDao;
+    private IClientDao clientDao;
 
     @Autowired
     public ClientService(ClientDao clientDao) {
@@ -41,8 +42,8 @@ public class ClientService implements IClientService {
         }
 
         List<Integer> allAge = getAllAge(clients);
-        kpiValues.put("promedio_edad:", getAverageAge(allAge));
-        kpiValues.put("deviacion_estandar:", getStandardDesviation(allAge));
+        kpiValues.put("promedio_edad", getAverageAge(allAge));
+        kpiValues.put("deviacion_estandar", getStandardDesviation(allAge));
 
         return kpiValues;
     }
